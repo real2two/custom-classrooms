@@ -7,6 +7,8 @@ Please don't kill me for making this.
 
 ### Todo
 
-- Multiple assignments.
+- Multiple announcements and assignments.
 - More commands.
+- Online student viewer.
+- API integrations with stuff like Google Documents.
 - idk
