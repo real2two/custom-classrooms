@@ -1,0 +1,20 @@
+{
+    "website": {
+        "port": 80,
+        "secret": "secret code"
+    },
+    "discord": {
+        "bot": {
+            "token": "token"
+        },
+        "oauth2": {
+            "id": "id",
+            "secret": "secret",
+            "callback": "http://localhost/callback"
+        }
+    },
+    "default": {
+        "prefix": "!",
+        "version": "Development Build"
+    }
+}
