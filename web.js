@@ -73,7 +73,7 @@ async function checkGuild(req, res) {
       };
     } else {
       if (new Permissions(guild.permissions).has('MANAGE_GUILD')) {
-        res.redirect("https://discord.com/api/oauth2/authorize?client_id=" + settings.discord.oauth2.id + "&permissions=67497025&redirect_uri=" + settings.discord.oauth2.callback + "&response_type=code&scope=identify%20guilds%20bot&guild_id=" + encodeURIComponent(req.params.id) + "&disable_guild_select=true");
+        return res.redirect("https://discord.com/api/oauth2/authorize?client_id=" + settings.discord.oauth2.id + "&permissions=67497025&redirect_uri=" + settings.discord.oauth2.callback + "&response_type=code&scope=identify%20guilds%20bot&guild_id=" + encodeURIComponent(req.params.id) + "&disable_guild_select=true");
       };
     };
   };
