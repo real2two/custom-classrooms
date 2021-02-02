@@ -1,0 +1,108 @@
+<html>
+    <head>
+        <style>
+            .assignment {
+                border: 1px solid black;
+            }
+            .assignment2 {
+                margin: 20px;
+            }
+
+            <% if (assignment) { %>
+                #editassignment {
+                    display: none;
+                }
+            <% } %>
+        </style>
+    </head>
+    <body>
+        <p><a href="/servers">Servers</a></p>
+
+        <h1><%= guild.name %></h1>
+        <p>This is your classroom configuration page.</p>
+
+        <p>API code: <code><%= api %></code></p>
+        <p><a href="/manage/<%= guild.id %>/regenerate">Regenerate API Code</a></p>
+
+        <!-- "a" stands for assignment. -->
+        <% if (assignment) { %>
+            <div class="assignment">
+                <div class="assignment2">
+                    <h3><%= assignment.name %></h3>
+                    <p><textarea rows="10" cols="50" disabled><%= assignment.description %></textarea></p>
+                    <p>
+                        <button onclick="editAssignment();">Modify</button>
+                        <button onclick="deleteAssignment()">Delete</button>
+                    </p>
+                </div>
+            </div>
+        <% } %>
+
+        <div id="editassignment">
+            <h2><% if (assignment) { %>Modify<% } else { %>Create<% } %> Assignment</h2>
+            <p>
+                Name: 
+                <input id="name"<% if (assignment) { %> value="<%= assignment.name %>"<% } %>>
+                <br>
+    
+                Description:<br>
+                <textarea id="description"><% if (assignment) { %><%= assignment.description %><% } %></textarea>
+                <br><br>
+    
+                <button onclick="createAssignment()"><% if (assignment) { %>Modify<% } else { %>Create<% } %></button>
+            </p>
+        </div>
+
+        <script>
+            let hidden = true;
+            function editAssignment() {
+                if (hidden == true) {
+                    hidden = false;
+                } else {
+                    hidden = true;
+                }
+                document.getElementById("editassignment").style.display = hidden == true ? "none" : "block";
+            }
+
+            function createAssignment() {
+                let xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = async function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        let thing = JSON.parse(xhr.responseText);
+                        if (thing.assignment) {
+                            document.location.reload();
+                        } else {
+                            alert(xhr.responseText);
+                        };
+                    };
+                };
+                xhr.open("POST", "/api/<%= guild.id %>/assignment/create", true);
+                xhr.setRequestHeader('Authorization', 'Bearer <%= api %>');
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.send(JSON.stringify({
+                    name: document.getElementById("name").value,
+                    description: document.getElementById("description").value
+                }));
+            }
+
+            function deleteAssignment() {
+                let xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = async function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        let thing = JSON.parse(xhr.responseText);
+                        if (thing.error == "none") {
+                            document.location.reload();
+                        } else {
+                            alert(xhr.responseText);
+                        };
+                    };
+                };
+                xhr.open("POST", "/api/<%= guild.id %>/assignment/delete", true);
+                xhr.setRequestHeader('Authorization', 'Bearer <%= api %>');
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.send();
+            }
+        </script>
+
+    </body>
+</html>

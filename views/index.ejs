@@ -1,0 +1,12 @@
+<html>
+    <body>
+        <% if (error) { %>
+            <p><b><%= error %></b></p>
+        <% } %>
+        <% if (!userinfo) { %>
+            <p><a href="/login">Login</a></p>
+        <% } else { %>
+            <p><%= JSON.stringify(userinfo) %></p>
+        <% } %>
+    </body>
+</html>

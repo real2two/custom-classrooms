@@ -1,0 +1,28 @@
+<html>
+    <body>
+        <p><a href="/logout">Logout</a></p>
+        <% if (guilds.length == 0) { %>
+            <p>You are not in any Discord servers with manage server permissions.</p>
+        <% } else { %>
+            <% for (var i = 0, len = guilds.length; i < len; i++) { %>
+                <p>
+                    <% if (guilds[i].info.icon) { %>
+                        <img src="https://cdn.discordapp.com/icons/<%= guilds[i].info.id %>/<%= guilds[i].info.icon %>.png">
+                    <% } else { %>
+                        <canvas id="canvas-<%= guilds[i].info.id %>" width="128" height="128"></canvas>
+                        <script>
+                            document.getElementById("canvas-<%= guilds[i].info.id %>").getContext("2d").font = "100px Arial";
+                            document.getElementById("canvas-<%= guilds[i].info.id %>").getContext("2d").fillStyle = "black";
+                            document.getElementById("canvas-<%= guilds[i].info.id %>").getContext("2d").fillText(`<%= guilds[i].info.name.replace(/`/g, "\\`") %>`.slice(0, 1), 25, 100);
+                        </script>
+                    <% } %>
+                    <% if (guilds[i].inguild) { %>
+                        <a style="text-decoration: none;" href="/manage/<%= guilds[i].info.id %>/overview"><%= guilds[i].info.name %></a> (Click to modify)
+                    <% } else { %>
+                        <a style="text-decoration: none;" href="/manage/<%= guilds[i].info.id %>/overview"><%= guilds[i].info.name %></a> (Click to invite)
+                    <% } %>
+                </p>
+            <% } %>
+        <% } %>
+    </body>
+</html>
