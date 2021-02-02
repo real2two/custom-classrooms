@@ -97,7 +97,7 @@
                         };
                     };
                 };
-                xhr.open("POST", "/api/<%= guild.id %>/assignment/delete", true);
+                xhr.open("DELETE", "/api/<%= guild.id %>/assignment/delete", true);
                 xhr.setRequestHeader('Authorization', 'Bearer <%= api %>');
                 xhr.setRequestHeader('Content-Type', 'application/json');
                 xhr.send();
